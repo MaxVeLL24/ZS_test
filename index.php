@@ -1,5 +1,7 @@
 <?php
 require_once 'autoloader.php';
+setcookie('IncorrectLoginCount', isset($_COOKIE['IncorrectLoginCount']) ? ++$_COOKIE['IncorrectLoginCount'] : 0);
+$visitCount = $_COOKIE['IncorrectLoginCount'];
 ?>
 
 <!doctype html>
@@ -33,12 +35,13 @@ require_once 'autoloader.php';
         require_once 'login.php';
     } else {
         $db = new DB();
-        $Validation = $db->login("SELECT * FROM `users` WHERE `email`='{$_POST['email']}' AND `password`='{$_POST['password']}'")->fetch_all();
-        $lastVisitInfo = $db->login("SELECT `last_visit` FROM `users` WHERE `email`='{$_POST['email']}' AND `password`='{$_POST['password']}'")->fetch_assoc();
-        $loginTimeUpdate = $db->login("UPDATE `users` SET `last_visit`=CURRENT_TIMESTAMP");
+        $Validation = $db->login("SELECT * FROM `users` WHERE `email`='{$_POST['email']}' AND `password`='{$_POST['password']}'")->fetch_assoc();
         if (!empty($Validation)) {
+            $lastVisitInfo = $db->login("SELECT `id`,`last_visit` FROM `users` WHERE `email`='{$_POST['email']}' AND `password`='{$_POST['password']}'")->fetch_assoc();
+            $loginTimeUpdate = $db->login("UPDATE `users` SET `last_visit`=CURRENT_TIMESTAMP");
             require_once 'success_login.php';
         } else {
+            $n=1;
             require_once 'ban.php';
         }
     }
