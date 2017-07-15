@@ -1,7 +1,9 @@
 <?php
 require_once 'autoloader.php';
-setcookie('IncorrectLoginCount', isset($_COOKIE['IncorrectLoginCount']) ? ++$_COOKIE['IncorrectLoginCount'] : 0);
-$visitCount = $_COOKIE['IncorrectLoginCount'];
+//setcookie('IncorrectLoginCount', isset($_COOKIE['IncorrectLoginCount']) ? ++$_COOKIE['IncorrectLoginCount'] : 0);
+//$visitCount = $_COOKIE['IncorrectLoginCount'];
+$counter = isset($_COOKIE['counter']) ? $_COOKIE['counter'] : 0;
+setcookie('counter', ++$counter);
 ?>
 
 <!doctype html>
@@ -33,19 +35,24 @@ $visitCount = $_COOKIE['IncorrectLoginCount'];
     <?php
     if (!isset($_POST['email']) and !isset($_POST['password'])) {
         require_once 'login.php';
-    } else {
-        $db = new DB();
-        $Validation = $db->login("SELECT * FROM `users` WHERE `email`='{$_POST['email']}' AND `password`='{$_POST['password']}'")->fetch_assoc();
-        if (!empty($Validation)) {
-            $lastVisitInfo = $db->login("SELECT `id`,`last_visit` FROM `users` WHERE `email`='{$_POST['email']}' AND `password`='{$_POST['password']}'")->fetch_assoc();
-            $loginTimeUpdate = $db->login("UPDATE `users` SET `last_visit`=CURRENT_TIMESTAMP");
-            require_once 'success_login.php';
-        } else {
-            $n=1;
-            require_once 'ban.php';
-        }
-    }
+}
+    // else {
+//        $db = new DB();
+//        $Validation = loginOperations::validate($_POST['email'], $_POST['password']);
+//        var_dump($Validation);
+//        if (!empty($Validation)) {
+//            $lastVisitInfo = $db->login("SELECT `id`,`last_visit` FROM `users` WHERE `email`='{$_POST['email']}' AND `password`='{$_POST['password']}'")->fetch_assoc();
+//            $loginTimeUpdate = $db->login("UPDATE `users` SET `last_visit`=CURRENT_TIMESTAMP");
+//            require_once 'success_login.php';
+//        } else {
+//            ++$count;
+//            require_once 'ban.php';
+//        }
+//    }
     ?>
 </div>
+
+
+<script src="js/ajax_login.js"></script>
 </body>
 </html>

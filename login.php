@@ -17,7 +17,7 @@
                        aria-describedby="basic-addon1">
             </div>
             <br>
-            <button type="submit" class="btn btn-success">Login</button>
+            <button type="button" class="btn btn-success submit">Login</button>
         </form>
     </div>
 </div>
