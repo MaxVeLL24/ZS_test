@@ -10,6 +10,3 @@ if (!empty($is_valid)) {
 } else {
     return false;
 }
-//foreach ($is_valid as $val=>$key) {
-//    var_dump($key);
-//}
