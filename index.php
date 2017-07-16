@@ -1,6 +1,5 @@
 <?php
 require_once 'autoloader.php';
-setcookie('WrongLoginCount', isset($_COOKIE['WrongLoginCount']) ? $_COOKIE['WrongLoginCount'] : 0,time()+3600);
 ?>
 
 <!doctype html>
